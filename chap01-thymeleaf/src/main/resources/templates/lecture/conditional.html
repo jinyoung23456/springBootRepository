@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    <h1>Conditional</h1>
+
+    <h3>
+        th:if는 변수 표현식의 OGNL을  활용한 조건식으로 조건문을 작성하면 결과가 true일 떄 해당 태그 범위가 처리된다.
+        th:unless는 표현식의 OGNL을 활용한 결과가 false일 때 해당 태그 범위가 처리 된다.
+    </h3>
+
+    <h2>th:if, th:unless</h2>
+<!--    <p th:if="${ num > 400 }">넘어온 값은 400보다 크다!</p>-->
+    <p th:if="${ num < 400 }">넘어온 값은 400보다 크다!</p>
+    <p th:unless="${ num > 400 }">넘어온 값은 400보다 작다!</p>
+<!--    <p th:unless="${ num < 400 }">넘어온 값은 400보다 작다!</p>-->
+
+    <th:block th:if="${ str == '사과' }">
+        <p>🍎🍎🍎🍎🍎🍎🍎</p>
+        <p>🍎 나는 사과야 🍎</p>
+        <p>🍎🍎🍎🍎🍎🍎🍎</p>
+    </th:block>
+    <th:block th:if="${ str == '바나나' }">
+        <p>🍌🍌🍌🍌🍌🍌🍌</p>
+        <p>🍌나는 바나나야 🍌</p>
+        <p>🍌🍌🍌🍌🍌🍌🍌</p>
+    </th:block>
+
+    <p th:if="${ num > 200 or num < 0 }">200보다 크거나 0보다 작은 수!</p>
+    <p th:if="${ str != null and str == '바나나' }">바나나 냠냠!🍌</p>
+
+    <p th:if="${ !#strings.isEmpty(str) and str == '바나나'}">바나나 냠🍌</p>
+
+    <!--
+        [ Thymeleaf에서 기본 제공되는 Utility Objects ]
+        - Strings : 문자 기능 제공
+        - Numbers 숫자 서식 기능
+        - Objects 객체 관련 기능
+        - Arrays 배열 관련 기능
+        - Lists List컬랙셔ㅑㄴ 관련 기능
+        - Maps  맵 컬랙셔ㅑㄴ 관련 시능
+        - Message 메세지, 국제화 처리 기능
+        - Dates : java.util.Date 서식 기능 제공
+        - Calendars : 자바. 유ㅜ틸. 카렌다 서식 기능 제고ㅓㅇ
+    -->
+        <h2>th:switch, th:case</h2>
+        <th:block th:switch="${ str }">
+            <span th:case="사과">사과가 선택되었습니다.</span>
+            <span th:case="바나나">바나나가 선택되었습니다.</span>
+        </th:block>
+
+        <h2>th:each</h2>
+        <h3>th:each를 통해 태그를 반복할 수 있다.</h3>
+        <table border="1">
+            <tr>
+                <th>이름</th>
+                <th>나이</th>
+                <th>성별</th>
+                <th>주소</th>
+            </tr>
+            <tr th:each="member : ${ memberList }">
+                <td th:text="${ member.name }"></td>
+                <td th:text="${ member.age }"></td>
+                <td th:text="${ member.gender }"></td>
+                <td th:text="${ member.address }"></td>
+            </tr>
+        </table>
+        <!-- th:each stat으로 반복 상태를 확인할 수  있다.--> 
+        <h3>#numbers Utilit Object를 이용한 반복문 작성</h3>
+        <th:block th:each="num : ${ #numbers.sequence(5, 10)}">
+            <a th:href="@{ |/numbering/${ numStat.count }| }" th:text="번호 + ${ num }"></a>
+        </th:block>
+
+</body>
+</html>
